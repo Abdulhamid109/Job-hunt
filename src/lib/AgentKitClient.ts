@@ -1,4 +1,4 @@
-// here we will be creating our isolated AgentKit Server /Background Workers
+// here we will be creating our isolated AgentKit Server/Background Workers
 
 import { createNetwork } from "@inngest/agent-kit";
 import { createServer } from "@inngest/agent-kit/server";
