@@ -1,0 +1,6 @@
+fastapi
+pydantic
+requests
+pdfPlumber
+Python-IO
+uvicorn

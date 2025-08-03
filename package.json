@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@inngest/agent-kit": "^0.9.0",
     "axios": "^1.10.0",
+    "imagekit": "^6.0.0",
+    "inngest": "^3.40.1",
     "mongoose": "^8.17.0",
     "next": "15.4.2",
     "puppeteer": "^24.14.0",
