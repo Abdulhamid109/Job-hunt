@@ -7,7 +7,7 @@ const UserMd = new mongoose.Schema({
     password:{type:String,required:true},
     phoneNumber: { type: String, required: true },
     currentAddress: { type: String },
-    portfolioLinks: {
+    PortfolioLinks: {
         linkedIn: { type: String },
         github: { type: String },
         personalWebsite: { type: String },
