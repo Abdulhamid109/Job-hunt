@@ -3,7 +3,6 @@
 import { createNetwork } from "@inngest/agent-kit";
 import { createServer } from "@inngest/agent-kit/server";
 
-
 const network = createNetwork({
     name:"JobHunt Network",
     agents:[]
