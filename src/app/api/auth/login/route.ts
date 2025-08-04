@@ -10,9 +10,6 @@ export async function POST(request: NextRequest) {
     try {
         const { email, password } = await request.json();
         // need to check if that particular exists or not
-<<<<<<< HEAD
-        
-=======
         const user = await User.findOne({ email });
         if (!user) {
             return NextResponse.json(
@@ -48,8 +45,6 @@ export async function POST(request: NextRequest) {
             return response
             
         }
-
->>>>>>> 361ce268eb0afcce4050ae3bb56a0f4b3c05c0b4
     } catch (error) {
         return NextResponse.json(
             { error: "Internal Server Error" + error },
