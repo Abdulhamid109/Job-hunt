@@ -43,7 +43,7 @@ def pdfpipeline(file_path:Doc_data):
         text = ""
         for page in pdf.pages:
                 text += page.extract_text() or ""
-        return text
+        return {"resume_text":text}
   except Exception as e:
       return f"Error: {str(e)}"
   
