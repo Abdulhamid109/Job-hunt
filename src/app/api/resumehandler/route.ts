@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import ImageKit from "imagekit";
 import { connect } from "@/utils/config";
-
+import { inngest } from "@/lib/Inngest";
 
 connect();
 
@@ -30,6 +30,21 @@ export async function POST(request: NextRequest) {
             fileName: filename,
             folder: "/resumes"
         });
+
+        const resumeUrl = response.url;
+
+        await inngest.send({
+            name:"hunt/resumesURLSender",
+            data:{
+                resumeUrl
+            }
+        });
+
+        return NextResponse.json(
+            {success:true,message:"Successfully uploaded the data to imagekit server"},
+            {status:200}
+        )
+
         
     } catch (error) {
         return NextResponse.json(
