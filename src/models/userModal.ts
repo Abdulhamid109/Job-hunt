@@ -13,21 +13,7 @@ const UserMd = new mongoose.Schema({
         personalWebsite: { type: String },
     },
 
-<<<<<<< HEAD
-const userMd = new mongoose.Schema({
-    name:{
-        type:String,
-        required:[true,"Please enter the name"]
-    },
-    email:{
-        type:String,
-        required:[true,"Please enter the email"]
-    },
-    password:{
-        type:String,
-        required:[true,"Please Enter your Password"]
-    },
-=======
+
     // 2. Job-Specific Details
     preferredLocations: [{ type: String }],
     expectedSalary: { type: String },
@@ -59,7 +45,7 @@ const userMd = new mongoose.Schema({
             endYear: { type: Number },
             gradeOrPercentage: { type: String },
         },
->>>>>>> 361ce268eb0afcce4050ae3bb56a0f4b3c05c0b4
+
     
 
     // 6. Skills
