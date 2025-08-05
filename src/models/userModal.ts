@@ -22,7 +22,7 @@ const UserMd = new mongoose.Schema({
     willingToTravel: { type: Boolean, default: false },
 
     // 3. Resume/CV Upload
-    resumeLink: { type: String, required: true },
+    resumeLink: { type: String, },
     coverLetterLink: { type: String },
     YearsOfExperience:{type:String},
     // 4. Work Experience

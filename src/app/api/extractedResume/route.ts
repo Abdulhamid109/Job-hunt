@@ -16,13 +16,15 @@ export async function POST(request:NextRequest){
             )
         }
         // calling the agent
-        const agent1 = resumeHandlerAgent(request);
-        const result = await agent1.run("Perform the operation method to you!!");
+        // const agent1 = resumeHandlerAgent(request);
+        // const result = await agent1.run("Perform the operation method to you!!");
 
-        console.log("Agent Result "+result);
+        // console.log("Agent Result "+result);
+        // agentresult:result
 
+        console.log("Came till agent..")
         return NextResponse.json(
-            {success:true,message:"everything went fruitfull",agentresult:result},
+            {success:true,message:"everything went fruitfull",},
             {status:200}
         )
     } catch (error) {

@@ -6,10 +6,10 @@ import axios from "axios";
 
 export const extarctResumeText = inngest.createFunction(
     { id: "getResumeText", retries: 2 },
-    { event: "hunt/resumesURLSender" },
+    { event: "hunt-resumesURLSender" },
     async ({ event, step }) => {
         const { resumeUrl } = event.data;
-        step.run("extract-text", async () => {
+        await step.run("extract-text", async () => {
             // a python helper function for extracting the text from it
             const resume_data = await ExtarctTextFromResume(resumeUrl);
             // runn the agent here...--Not Possible

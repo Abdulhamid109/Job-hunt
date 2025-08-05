@@ -33,8 +33,9 @@ export async function POST(request: NextRequest) {
 
         const resumeUrl = response.url;
         // we need to store the resume in the db also...we can use the inngest for it again
-        await inngest.send({
-            name:"hunt/resumelinkDbadder",
+        try {
+            await inngest.send({
+            name:"hunt-resumelinkDbadder",
             data:{
                 resumeUrl
             }
@@ -42,12 +43,15 @@ export async function POST(request: NextRequest) {
         
         console.log("Resume URL from ImageKit "+resumeUrl);
         await inngest.send({
-            name:"hunt/resumesURLSender",
+            name:"hunt-resumesURLSender",
             data:{
                 resumeUrl
             }
         });
 
+        } catch (error) {
+            console.log("Error is error:"+error)
+        }
         return NextResponse.json(
             {success:true,message:"Successfully uploaded the data to imagekit server"},
             {status:200}
@@ -55,6 +59,7 @@ export async function POST(request: NextRequest) {
 
         
     } catch (error) {
+        console.log(error);
         return NextResponse.json(
             { error: "Internal Server error " + error },
             { status: 500 }
