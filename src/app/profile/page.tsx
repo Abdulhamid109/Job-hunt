@@ -1,5 +1,7 @@
+"use client"
 import axios from 'axios';
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 
 const ProfilePage = () => {
   const [file,setFile] = useState<File|null>(null);
@@ -29,8 +31,10 @@ const ProfilePage = () => {
       });
 
       if (response.status === 200) {
-        
+        console.log(response.data.message);
+        toast.success(response.data.message);
       }
+      // console.log("")
     } catch (error) {
       console.log("Failed to send the file to backend!!"+error)
     }
@@ -46,7 +50,7 @@ const ProfilePage = () => {
         accept='.pdf'
         className='flex justify-center items-center p-2 border-2 border-amber-600 rounded-md hover:bg-zinc-50'
         />
-        <button onClick={sendToImageKit}>Upload</button>
+        <button className='p-2 bg-red-300' onClick={sendToImageKit}>Upload</button>
       </section>
     </div>
   )

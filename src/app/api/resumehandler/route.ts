@@ -38,7 +38,8 @@ export async function POST(request: NextRequest) {
             data:{
                 resumeUrl
             }
-        })
+        });
+        
         console.log("Resume URL from ImageKit "+resumeUrl);
         await inngest.send({
             name:"hunt/resumesURLSender",

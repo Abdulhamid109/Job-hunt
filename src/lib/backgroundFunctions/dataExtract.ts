@@ -9,7 +9,6 @@ export const extarctResumeText = inngest.createFunction(
     { event: "hunt/resumesURLSender" },
     async ({ event, step }) => {
         const { resumeUrl } = event.data;
-
         step.run("extract-text", async () => {
             // a python helper function for extracting the text from it
             const resume_data = await ExtarctTextFromResume(resumeUrl);
@@ -19,7 +18,7 @@ export const extarctResumeText = inngest.createFunction(
             // 2. Or we can store the data for small span of time on redis and then on another createFunction we can directly send it to agent
             const response = await axios.post("/api/extractedResume",{resume_data});
             if(response.status!==200){
-                return response.data.error
+                console.log("Error - ",response.data.error)
             }
 
             return response.data.success;
