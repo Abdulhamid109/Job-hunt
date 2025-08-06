@@ -28,12 +28,13 @@ export async function POST(request: NextRequest) {
                 )
             }
             // setting the cookies
+            console.log("UserID : "+user._id);
             const payload = {
-                id:user.id,
+                id:user._id,
                 email:email
             }
 
-            const token = jwt.sign(payload,process.env.SECRECT_KEY!,{
+            const token = jwt.sign(payload,process.env.SECRET_KEY!,{
                 expiresIn:"1d"
             });
 
@@ -47,6 +48,7 @@ export async function POST(request: NextRequest) {
             
         
     } catch (error) {
+        console.log("Error"+error);
         return NextResponse.json(
             { error: "Internal Server Error" + error },
             { status: 500 }

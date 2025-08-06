@@ -2,15 +2,18 @@
 
 import { getDatafromToken } from "@/helpers/tokenData";
 import User from "@/models/userModal";
+import { connect } from "@/utils/config";
 import { NextRequest, NextResponse } from "next/server";
 
 
+connect();
+
 export async function POST(request:NextRequest){
     try {
-        const {resume_link} = await request.json();
+        const {resumeUrl} = await request.json();
         const userid = await getDatafromToken(request);
-
-        const updatedUser = await User.findOneAndUpdate({_id:userid},{resumeLink:resume_link})
+        console.log("Current User ID:"+userid);
+        const updatedUser = await User.findOneAndUpdate({_id:userid},{resumeLink:resumeUrl})
         if(!updatedUser){
             return NextResponse.json(
                 {error:"Failed to Update the resumeLink"},
