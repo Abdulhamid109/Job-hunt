@@ -11,8 +11,8 @@ import {resume_db_adder} from "@/lib/backgroundFunctions/dbSave";
 const handler = serve({
     client: inngest,
     functions: [
-        extarctResumeText,           // Listens to "hunt/resumelinkDbadder"
-        resume_db_adder, // Listens to "hunt-resumesURLSender" 
+        extarctResumeText,          
+        resume_db_adder, 
 
     ],
 });

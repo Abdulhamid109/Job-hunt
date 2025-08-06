@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
         const { email, password } = await request.json();
         // need to check if that particular exists or not
         const user = await User.findOne({ email });
+        console.log("User"+user);
         if (!user) {
             return NextResponse.json(
                 { error: "Account does not Exists" },
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest) {
             )
         }
         // compare the password
-        else {
+        
             const result = await bcrypt.compare(password, user.password);
             if (!result) {
                 return NextResponse.json(
@@ -37,14 +38,14 @@ export async function POST(request: NextRequest) {
             });
 
             const response = NextResponse.json(
-                {success:true},
+                {success:true,token},
                 {status:200}
             );
 
-            response.cookies.set("userToken",token);
-            return response
+            response.cookies.set("userToken",token,{httpOnly:true});
+            return response;
             
-        }
+        
     } catch (error) {
         return NextResponse.json(
             { error: "Internal Server Error" + error },

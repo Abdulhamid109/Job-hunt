@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
         // we need to store the resume in the db also...we can use the inngest for it again
         try {
             await inngest.send({
-            name:"hunt-resumelinkDbadder",
+            name:"hunt/resumelinkDbadder",
             data:{
                 resumeUrl
             }
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
         
         console.log("Resume URL from ImageKit "+resumeUrl);
         await inngest.send({
-            name:"hunt-resumesURLSender",
+            name:"hunt/resumesURLSender",
             data:{
                 resumeUrl
             }
