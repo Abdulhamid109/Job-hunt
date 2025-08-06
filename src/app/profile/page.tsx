@@ -52,6 +52,9 @@ const ProfilePage = () => {
         />
         <button className='p-2 bg-red-300' onClick={sendToImageKit}>Upload</button>
       </section>
+      <div>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi, nam.
+      </div>
     </div>
   )
 }

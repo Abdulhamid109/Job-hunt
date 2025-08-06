@@ -20,7 +20,6 @@ export const extarctResumeText = inngest.createFunction(
             if(response.status!==200){
                 console.log("Error - ",response.data.error)
             }
-
             return response.data.success;
         })
     }
