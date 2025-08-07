@@ -15,14 +15,18 @@ const LoginPage = () => {
       const response = await axios.post('/api/auth/login', { email, password }, { withCredentials: true })
 
       if (response.status === 200) {
+        console.log("cuid => "+response.data.uid);
+        localStorage.setItem("uid",response.data.uid);
+        toast.success("Successfully logged in");
         router.push("/profile");
-        toast.success("Successfully logged in")
       }
     } catch (error) {
       console.error('Login failed:', error)
       alert('Login failed')
     }
   }
+//   We need to Store the UID into the localStorage of browser
+
 
   return (
     <div className='flex flex-col justify-center items-center h-screen w-screen '>

@@ -1,6 +1,7 @@
+"use client"
 // An AI agent that can fill out the data from the extracted resume to the database at the particular point
 
-import { getDatafromToken } from "@/helpers/tokenData";
+// import { getDatafromToken } from "@/helpers/tokenData";
 import User from "@/models/userModal";
 import { createAgent, createTool, gemini } from "@inngest/agent-kit";
 import { NextRequest } from "next/server";
@@ -76,7 +77,8 @@ export const resumeHandlerAgent = (request: NextRequest) => {
                     network.state.data.languages = languages;
                     network.state.data.certification = certifications;
                     // here we start storing the data in the database
-                    const userId = await getDatafromToken(request)
+                    // const userId = await getDatafromToken(request)
+                    const userId = localStorage.getItem("uid");
                     console.log("Agentkit mein uid"+userId)
                     await User.findByIdAndUpdate(
                         userId,
