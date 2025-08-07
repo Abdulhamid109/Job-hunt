@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import ImageKit from "imagekit";
 import { connect } from "@/utils/config";
 import { inngest } from "@/lib/Inngest";
+import { getDatafromToken } from "@/helpers/tokenData";
 
 connect();
 
@@ -22,7 +23,8 @@ export async function POST(request: NextRequest) {
                 { status: 404 }
             )
         }
-
+        const uid = await getDatafromToken(request);
+        console.log("User ki Id",uid);//demonstration...
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
         const response = await imagekit.upload({
@@ -37,7 +39,8 @@ export async function POST(request: NextRequest) {
             await inngest.send({
             name:"hunt/resumelinkDbadder",
             data:{
-                resumeUrl
+                resumeUrl,
+                uid
             }
         });
         

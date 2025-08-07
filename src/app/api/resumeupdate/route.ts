@@ -10,10 +10,8 @@ connect();
 
 export async function POST(request:NextRequest){
     try {
-        const {resumeUrl} = await request.json();
-        const userid = await getDatafromToken(request);
-        console.log("Current User ID:"+userid);
-        const updatedUser = await User.findOneAndUpdate({_id:userid},{resumeLink:resumeUrl})
+        const {resumeUrl,uid} = await request.json();
+        const updatedUser = await User.findOneAndUpdate({_id:uid},{resumeLink:resumeUrl})
         if(!updatedUser){
             return NextResponse.json(
                 {error:"Failed to Update the resumeLink"},
