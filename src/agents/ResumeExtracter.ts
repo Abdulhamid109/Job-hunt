@@ -1,6 +1,4 @@
-"use client"
 // An AI agent that can fill out the data from the extracted resume to the database at the particular point
-
 // import { getDatafromToken } from "@/helpers/tokenData";
 import User from "@/models/userModal";
 import { createAgent, createTool, gemini } from "@inngest/agent-kit";
