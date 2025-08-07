@@ -8,24 +8,45 @@ import { z } from "zod";
 
 
 // trigger from frontend..When the User is told to continue with resume data..
-export const resumeHandlerAgent = (request:NextRequest) => {
+export const resumeHandlerAgent = (request: NextRequest) => {
     return createAgent({
         name: "Resume Adminstrator",
         description: "An AI agent that can fill out the data from the extracted resume to the database at the particular point",
-        system: "",
+        system: `You are Resume Administrator, an intelligent AI assistant designed to process and structure information from a user's resume. 
+                Your primary objective is to accurately extract and organize resume data and populate the relevant fields in a database.
+                You must:
+                - Interpret raw resume text into structured data.
+                - Use contextual understanding to map resume content into specific fields such as:
+                - Portfolio Links (LinkedIn, GitHub, Personal Website)
+                - Education (Degree, Institution, Start/End Year, Grades)
+                - Technical Skills (e.g., programming languages, tools)
+                - Soft Skills (e.g., leadership, communication)
+                - Languages (spoken/written)
+                - Certifications (with issuing organization and date)
+
+                Do not fabricate or infer any data not explicitly mentioned or reasonably implied in the resume text.
+
+                Ensure the formatting of each field is correct and aligns with expected types:
+                - URLs are optional if not present then null
+                - Dates must be valid and parsable or they can be strings
+                - Arrays should only include non-empty, relevant strings
+
+                Only call the appropriate tool \`PortFolioFiller\` once all fields are well-extracted and logically mapped.
+
+                Your ultimate goal is to assist the user in smoothly transferring all meaningful resume data into their profile database with high accuracy and minimal assumptions.`,
         model: gemini({
             model: "gemini-1.5-flash",
-            apiKey: "",
+            apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY!,
         }),
         tools: [
             createTool({
-                name: "PortFolio Filler",
+                name: "PortFolioFiller",
                 description: "The resume text based on the title should fill in the database",
                 parameters: z.object({
                     portfolioLinks: z.object({
-                        linkedIn: z.string().url().optional(),
-                        github: z.string().url().optional(),
-                        personalWebsite: z.string().url().optional(),
+                        linkedIn: z.string().optional(),
+                        github: z.string().optional(),
+                        personalWebsite: z.string().optional(),
                     }),
                     education: z.object({
                         degree: z.string(),
@@ -56,6 +77,7 @@ export const resumeHandlerAgent = (request:NextRequest) => {
                     network.state.data.certification = certifications;
                     // here we start storing the data in the database
                     const userId = await getDatafromToken(request)
+                    console.log("Agentkit mein uid"+userId)
                     await User.findByIdAndUpdate(
                         userId,
                         {

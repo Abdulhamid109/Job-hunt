@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
             });
 
             const response = NextResponse.json(
-                {success:true,token},
+                {success:true,token,uid:user._id},
                 {status:200}
             );
 
