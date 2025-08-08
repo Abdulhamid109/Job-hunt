@@ -99,6 +99,7 @@ export const resumeHandlerAgent = createAgent({
                             softSkills,
                             languages,
                             certifications,
+                            // name:certifications
                             userId
                         }
                     })

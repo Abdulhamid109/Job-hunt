@@ -18,7 +18,7 @@ export async function POST(request:NextRequest){
                 {status:404}
             )
         }
-        await redis.setex("cuid",50000,uid);
+        
         // calling the agent
         console.log("Agent ki Pass UID ",uid);
         const result = await resumeHandlerAgent.run(`This is my resume text ${resume_data}`);

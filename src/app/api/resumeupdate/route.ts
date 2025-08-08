@@ -1,6 +1,4 @@
 // here we will be uploading/updating the resume to our db
-
-import { getDatafromToken } from "@/helpers/tokenData";
 import User from "@/models/userModal";
 import { connect } from "@/utils/config";
 import { NextRequest, NextResponse } from "next/server";

@@ -1,5 +1,6 @@
 // Saving the resume_link in the database
 import { inngest } from "@/lib/Inngest";
+import User from "@/models/userModal";
 import axios from "axios";
 
 
@@ -46,9 +47,36 @@ export const resume_rem_db_adder = inngest.createFunction(
             technicalSkills,
             softSkills,
             languages,
-            certifications,
+            // certifications,
             userId
         });
+        
+        //we can do the db operation here only
+        const updatedUser = await User.findOneAndUpdate(
+            {_id:userId},{
+            PortfolioLinks:{
+                linkedIn,
+                github,
+                personalWebsite
+            },
+            education:{
+                degree,
+                institution,
+                startYear,
+                endYear,
+                gradeOrPercentage
+            },
+            technicalSkills,
+            softSkills,
+            languages
+            // certifications:{
+            //     name:certifications.name || "",
+            //     issuingOrganization:certifications.issuingOrganization || "",
+            //     dateEarned:certifications.dateEarned || ""
+            // }
+        });
 
+
+        return {success:true,updatedUser};
     }
 )
