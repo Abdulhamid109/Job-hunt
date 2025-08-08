@@ -49,7 +49,8 @@ export async function POST(request: NextRequest) {
         await inngest.send({
             name:"hunt/resumesURLSender",
             data:{
-                resumeUrl
+                resumeUrl,
+                uid
             }
         });
 

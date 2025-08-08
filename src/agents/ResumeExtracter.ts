@@ -1,14 +1,14 @@
 // An AI agent that can fill out the data from the extracted resume to the database at the particular point
 // import { getDatafromToken } from "@/helpers/tokenData";
+import { inngest } from "@/lib/Inngest";
+import { redis } from "@/lib/redis";
 import User from "@/models/userModal";
 import { createAgent, createTool, gemini } from "@inngest/agent-kit";
-import { NextRequest } from "next/server";
 import { z } from "zod";
 
 
 // trigger from frontend..When the User is told to continue with resume data..
-export const resumeHandlerAgent = (request: NextRequest) => {
-    return createAgent({
+export const resumeHandlerAgent = createAgent({
         name: "Resume Adminstrator",
         description: "An AI agent that can fill out the data from the extracted resume to the database at the particular point",
         system: `You are Resume Administrator, an intelligent AI assistant designed to process and structure information from a user's resume. 
@@ -74,32 +74,61 @@ export const resumeHandlerAgent = (request: NextRequest) => {
                     network.state.data.soft_skills = softSkills;
                     network.state.data.languages = languages;
                     network.state.data.certification = certifications;
-                    // here we start storing the data in the database
-                    // const userId = await getDatafromToken(request)
-                    const userId = localStorage.getItem("uid");
-                    console.log("Agentkit mein uid"+userId)
-                    await User.findByIdAndUpdate(
-                        userId,
-                        {
-                            PortfolioLinks: {
-                                linkedIn: portfolioLinks.linkedIn,
-                                github: portfolioLinks.github,
-                                personalWebsite: portfolioLinks.personalWebsite,
-                            },
-                            education: {
-                                degree: education.degree,
-                                institution: education.institution,
-                                startYear: education.startYear,
-                                endYear: education.endYear,
-                                gradeOrPercentage: education.gradeOrPercentage,
-                            },
-                            technicalSkills,
+
+                    console.log("PortFolio Link "+portfolioLinks.github);
+                    console.log("PortFolio Link "+portfolioLinks.linkedIn);
+                    console.log("PortFolio Link "+portfolioLinks.personalWebsite);
+                    const userId = await redis.get("cuid");
+
+                    console.log("Current Users UID"+userId);
+
+                    //create the background worker where they can update the values in the db
+
+                    await inngest.send({
+                        name:"hunt/resumeDataToDB",
+                        data:{
+                            github:portfolioLinks.github,
+                            linkedIn:portfolioLinks.linkedIn,
+                            personalWebsite:portfolioLinks.personalWebsite,
+                            degree:education.degree,
+                            institution:education.institution,
+                            startYear:education.startYear,
+                            endYear:education.endYear,
+                            gradeOrPercentage:education.gradeOrPercentage,
+                            technicalSkills:technicalSkills,
                             softSkills,
                             languages,
                             certifications,
-                        },
-                        { new: true, upsert: false } // upsert false ensures it only updates if found
-                    );
+                            userId
+                        }
+                    })
+
+                    // education
+                    console.log("Educationnn "+education.degree)
+                    // here we start storing the data in the database
+                    // const userId = await getDatafromToken(request)
+                    // await User.findByIdAndUpdate(
+                    //     userId,
+                    //     {
+                    //         PortfolioLinks: {
+                    //             linkedIn: portfolioLinks.linkedIn,
+                    //             github: portfolioLinks.github,
+                    //             personalWebsite: portfolioLinks.personalWebsite,
+                    //         },
+                    //         education: {
+                    //             degree: education.degree,
+                    //             institution: education.institution,
+                    //             startYear: education.startYear,
+                    //             endYear: education.endYear,
+                    //             gradeOrPercentage: education.gradeOrPercentage,
+                    //         },
+                    //         technicalSkills,
+                    //         softSkills,
+                    //         languages,
+                    //         certifications,
+                    //     },
+                    //     { new: true, upsert: false } // upsert false ensures it only updates if found
+                    // );
 
                     return { success: true };
 
@@ -108,4 +137,3 @@ export const resumeHandlerAgent = (request: NextRequest) => {
         ]
 
     })
-}
